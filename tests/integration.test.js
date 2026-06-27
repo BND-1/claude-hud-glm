@@ -546,7 +546,7 @@ test("CLI prints initializing message on empty stdin", async (t) => {
       .replace(/\u00A0/g, " ")
       .trimEnd();
     assert.ok(
-      normalized.startsWith("[claude-hud] Initializing..."),
+      normalized.startsWith("[claude-hud-glm] Initializing..."),
       `unexpected output: ${normalized}`,
     );
   } finally {

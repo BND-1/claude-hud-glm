@@ -33,7 +33,7 @@ export const zhHans = {
     "format.justNow": "刚刚",
     "format.ago": "前",
     // Init
-    "init.initializing": "[claude-hud] 正在初始化...",
-    "init.macosNote": "[claude-hud] 注意：在 macOS 上，您可能需要重启 Claude Code 才能显示 HUD。",
+    "init.initializing": "[claude-hud-glm] 正在初始化...",
+    "init.macosNote": "[claude-hud-glm] 注意：在 macOS 上，您可能需要重启 Claude Code 才能显示 HUD。",
 };
 //# sourceMappingURL=zh-Hans.js.map

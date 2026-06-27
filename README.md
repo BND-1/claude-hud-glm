@@ -1,9 +1,25 @@
-# Claude HUD
+# claude-hud-glm
+
+A Claude Code statusline plugin — context, tools, agents, todos, **plus a live GLM / 智谱 (Zhipu) coding-plan quota line**. A fork of [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud).
+
+## ✨ What this fork adds
+
+A configurable **GLM quota line** on the statusline, driven by a background
+snapshot (the HUD never calls the network while rendering):
+
+- **5h token quota** — reuses the native Usage bar
+- **Monthly MCP tool-call quota** (e.g. `744/4000`)
+- Per-tool breakdown · per-model token totals · 7-day token estimate · reset countdown
+- 8 independent `display.showGlm*` toggles
+
+Setup & the full toggle list: **[GLM_QUOTA.md](GLM_QUOTA.md)**.
+
+---
 
 A Claude Code plugin that shows what's happening — context usage, active tools, running agents, and todo progress. Always visible below your input.
 
-[![License](https://img.shields.io/github/license/jarrodwatts/claude-hud?v=2)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/jarrodwatts/claude-hud)](https://github.com/jarrodwatts/claude-hud/stargazers)
+[![License](https://img.shields.io/github/license/BND-1/claude-hud-glm?v=2)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/BND-1/claude-hud-glm)](https://github.com/BND-1/claude-hud-glm/stargazers)
 
 ![Claude HUD in action](claude-hud-preview-5-2.png)
 
@@ -15,7 +31,7 @@ Inside a Claude Code instance, run the following commands:
 
 **Step 1: Add the marketplace**
 ```
-/plugin marketplace add jarrodwatts/claude-hud
+/plugin marketplace add BND-1/claude-hud-glm
 ```
 
 **Step 2: Install the plugin**
@@ -404,7 +420,7 @@ Leaving it unset (or setting an explicit negative: `0`, `false`, `off`, `no`) ke
 ## Development
 
 ```bash
-git clone https://github.com/jarrodwatts/claude-hud
+git clone https://github.com/BND-1/claude-hud-glm
 cd claude-hud
 npm ci && npm run build
 npm test
@@ -422,4 +438,4 @@ MIT — see [LICENSE](LICENSE)
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jarrodwatts/claude-hud&type=Date)](https://star-history.com/#jarrodwatts/claude-hud&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=BND-1/claude-hud-glm&type=Date)](https://star-history.com/#BND-1/claude-hud-glm&Date)

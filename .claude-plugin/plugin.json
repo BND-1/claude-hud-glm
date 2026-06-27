@@ -3,15 +3,15 @@
   "description": "Real-time statusline HUD for Claude Code - context, tools, agents, todos + GLM/Zhipu coding-plan quota",
   "version": "0.3.0-glm.1",
   "author": {
-    "name": "Jarrod Watts",
-    "url": "https://github.com/jarrodwatts"
+    "name": "BND-1",
+    "url": "https://github.com/BND-1"
   },
   "commands": [
     "./commands/setup.md",
     "./commands/configure.md"
   ],
-  "homepage": "https://github.com/jarrodwatts/claude-hud",
-  "repository": "https://github.com/jarrodwatts/claude-hud",
+  "homepage": "https://github.com/BND-1/claude-hud-glm",
+  "repository": "https://github.com/BND-1/claude-hud-glm",
   "license": "MIT",
   "keywords": ["hud", "monitoring", "statusline", "context", "tools", "agents", "todos", "claude-code"]
 }

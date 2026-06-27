@@ -64,20 +64,45 @@ GLM max │ MCP月 ██░░░░░░░░ 18% (744/4000) │ GLM-5.2 3.3
 
 ---
 
-## 安装(本地,不注册为 marketplace 插件)
+## 安装
+
+> 两种等价方式,配置文件共用同一路径(`~/.claude/plugins/claude-hud/config.json`),切换不丢配置。
+
+### 方式 A:作为插件安装(推荐,纯插件体验)
+
+在 Claude Code 里:
+
+```
+/plugin marketplace add BND-1/claude-hud-glm
+/plugin install claude-hud-glm@claude-hud-glm
+```
+
+装好后运行 `/configure` 勾选 GLM 各项,或直接编辑 config:
+
+```jsonc
+{ "display": { "showGlmQuota": true } }
+```
+
+statusLine 指向插件缓存里的 launcher(自动解析版本目录,launcher 内部会在快照过期时后台跑 `fetch.mjs`):
 
 ```bash
-git clone <本仓库> claude-hud-glm && cd claude-hud-glm
+bash -c 'd=$(ls -d "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/claude-hud-glm/claude-hud-glm/*/ 2>/dev/null | sort -V | tail -1); exec bash "${d}run-statusline.sh"'
+```
+
+### 方式 B:本地开发(clone 仓库直接跑,改代码 `npm run build` 后即时生效)
+
+```bash
+git clone https://github.com/BND-1/claude-hud-glm && cd claude-hud-glm
 git remote add upstream https://github.com/jarrodwatts/claude-hud   # 便于以后 rebase 上游
 npm install && npm run build                                         # 产出 dist/
 node fetch.mjs --force                                               # 首次拉取额度
 ```
 
-把 `~/.claude/settings.json` 的 `statusLine.command` 改为:
+statusLine 直接指向 clone 的 launcher(脚本自解析目录、从 PATH/nvm/homebrew 找 node,无需改路径):
+
 ```json
 "statusLine": { "type": "command", "command": "bash /绝对路径/claude-hud-glm/run-statusline.sh" }
 ```
-`run-statusline.sh` 里的 `FORK` / `NODE` 路径按实际改。
 
 然后在 `~/.claude/plugins/claude-hud/config.json` 的 `display` 加 `"showGlmQuota": true`。
 
@@ -98,10 +123,9 @@ node fetch.mjs --force                                               # 首次拉
 
 - **"周额度"是近似**:智谱无周配额,`weekly_tokens` 是近 7 天 token 累加的绝对量,不是百分比。
 - **"月额度"是 MCP 工具调用配额**(次数,如 744/4000),不是 token。
-- **`/configure` 兼容性**:若本 fork 未注册为插件、仍用原 `claude-hud` 插件的 `/configure`,
-  该流程不认识 `showGlm*` 键,可能在保存时丢弃它们。GLM 开关请直接编辑 `config.json`;
-  若哪天 GLM 行消失了,重新加上 `"showGlmQuota": true` 即可。
-  (彻底解决:把本 fork 注册为独立插件,替换原 `claude-hud`,用本 fork 自带的 `/configure`。)
+- **`/configure`**:本 fork 自带的 `/configure` 已认识所有 `showGlm*` 键(见 `commands/configure.md`
+  的 Element Mapping)。请确保启用的是 `claude-hud-glm` 而非原 `claude-hud` 插件,否则旧插件的
+  `/configure` 保存时可能丢掉这些键(GLM 行若消失,重新加 `"showGlmQuota": true` 即可)。
 - **接口非公开文档化**:智谱 `/api/monitor/usage/*` 字段若变动,`fetch.mjs` 需跟进;缺字段时
   对应展示项会隐藏而非崩溃。
 - **token 明文**:`ANTHROPIC_AUTH_TOKEN` 本就明文存于 `settings.json.env`(现状);fetcher 只复用,

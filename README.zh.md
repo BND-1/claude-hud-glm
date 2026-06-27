@@ -1,9 +1,24 @@
-# Claude HUD
+# claude-hud-glm
+
+一个 Claude Code 状态栏插件——展示上下文、工具、Agent、待办，**并常驻显示 GLM / 智谱套餐额度**。[jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud) 的 fork。
+
+## ✨ 这个 fork 新增了什么
+
+一条可配置的 **GLM 额度行**，由后台快照驱动（HUD 渲染时不发任何网络请求）：
+
+- **5 小时 token 额度** —— 复用原生 Usage 进度条
+- **月度 MCP 工具调用配额**（如 `744/4000`）
+- 每工具明细 · 各模型 token · 近 7 天 token 近似 · 重置倒计时
+- 8 个独立可勾选的 `display.showGlm*` 开关
+
+安装与完整开关列表见 **[GLM_QUOTA.md](GLM_QUOTA.md)**。
+
+---
 
 一个 Claude Code 插件，实时显示正在发生的事情——上下文使用率、活跃工具、运行中的 Agent 和待办进度。始终在你的输入下方可见。
 
-[![License](https://img.shields.io/github/license/jarrodwatts/claude-hud?v=2)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/jarrodwatts/claude-hud)](https://github.com/jarrodwatts/claude-hud/stargazers)
+[![License](https://img.shields.io/github/license/BND-1/claude-hud-glm?v=2)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/BND-1/claude-hud-glm)](https://github.com/BND-1/claude-hud-glm/stargazers)
 
 ![Claude HUD in action](claude-hud-preview-5-2.png)
 
@@ -15,7 +30,7 @@
 
 **步骤 1：添加市场**
 ```
-/plugin marketplace add jarrodwatts/claude-hud
+/plugin marketplace add BND-1/claude-hud-glm
 ```
 
 **步骤 2：安装插件**
@@ -381,7 +396,7 @@ CLAUDE_HUD_DISABLE=1 claude
 ## 开发
 
 ```bash
-git clone https://github.com/jarrodwatts/claude-hud
+git clone https://github.com/BND-1/claude-hud-glm
 cd claude-hud
 npm ci && npm run build
 npm test
@@ -399,4 +414,4 @@ MIT — 详见 [LICENSE](LICENSE)
 
 ## Star 历史
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jarrodwatts/claude-hud&type=Date)](https://star-history.com/#jarrodwatts/claude-hud&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=BND-1/claude-hud-glm&type=Date)](https://star-history.com/#BND-1/claude-hud-glm&Date)

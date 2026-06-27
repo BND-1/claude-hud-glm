@@ -130,7 +130,7 @@ test("main logs an error when dependencies throw", async () => {
     log: (...args) => logs.push(args.join(" ")),
   });
 
-  assert.ok(logs.some((line) => line.includes("[claude-hud] Error:")));
+  assert.ok(logs.some((line) => line.includes("[claude-hud-glm] Error:")));
 });
 
 test("main logs unknown error for non-Error throws", async () => {
@@ -177,7 +177,7 @@ test("index entrypoint runs when executed directly", async () => {
     await cleanup();
   }
 
-  assert.ok(logs.some((line) => line.includes("[claude-hud] Initializing...")));
+  assert.ok(logs.some((line) => line.includes("[claude-hud-glm] Initializing...")));
 });
 
 test("main executes the happy path", async () => {

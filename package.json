@@ -25,8 +25,13 @@
     "glm",
     "zhipu"
   ],
-  "author": "Jarrod Watts",
+  "author": "BND-1 (fork of jarrodwatts/claude-hud)",
   "license": "MIT",
+  "homepage": "https://github.com/BND-1/claude-hud-glm",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BND-1/claude-hud-glm.git"
+  },
   "engines": {
     "node": ">=18.0.0"
   },
