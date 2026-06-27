@@ -6,6 +6,7 @@ const PROGRESS_LABEL_KEYS = [
     "label.context",
     "label.usage",
     "label.weekly",
+    "label.glmQuota",
 ];
 /**
  * Compute the visual width of a plain-text string (no ANSI).

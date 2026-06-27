@@ -304,6 +304,13 @@ If user chooses "Remove", set `display.customLine` to `""` in config.
 | Compact usage | `display.usageCompact` |
 | Usage value | `display.usageValue` |
 | Usage reset label | `display.showResetLabel` |
+| **GLM quota line** | `display.showGlmQuota` (master toggle for the whole GLM row) |
+| GLM plan level | `display.showGlmLevel` |
+| GLM monthly MCP quota | `display.showGlmMonthlyMcp` (+ `display.showGlmMcpTotal` for `used/total`) |
+| GLM MCP per-tool breakdown | `display.showGlmMcpBreakdown` |
+| GLM per-model tokens | `display.showGlmModels` |
+| GLM 7-day token estimate | `display.showGlmWeeklyTokens` |
+| GLM reset countdown | `display.showGlmReset` |
 | Session name | `display.showSessionName` |
 | Session duration | `display.showDuration` |
 | Session tokens | `display.showSessionTokens` |

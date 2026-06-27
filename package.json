@@ -1,7 +1,7 @@
 {
-  "name": "claude-hud",
-  "version": "0.3.0",
-  "description": "Real-time statusline HUD for Claude Code",
+  "name": "claude-hud-glm",
+  "version": "0.3.0-glm.1",
+  "description": "Real-time statusline HUD for Claude Code, with GLM/Zhipu coding-plan quota",
   "type": "module",
   "main": "dist/index.js",
   "files": [
@@ -21,7 +21,9 @@
   "keywords": [
     "claude-code",
     "statusline",
-    "hud"
+    "hud",
+    "glm",
+    "zhipu"
   ],
   "author": "Jarrod Watts",
   "license": "MIT",

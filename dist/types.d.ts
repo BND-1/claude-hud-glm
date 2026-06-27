@@ -89,6 +89,33 @@ export interface ExternalUsageSnapshot {
     updated_at?: string | number | null;
     balance_label?: string | null;
 }
+export interface GlmWindowPercent {
+    used_percentage: number | null;
+    resets_at: Date | null;
+}
+export interface GlmMonthlyMcp {
+    used_percentage: number | null;
+    current: number | null;
+    total: number | null;
+    remaining: number | null;
+    resets_at: Date | null;
+}
+export interface GlmModelTokens {
+    code: string;
+    tokens: number | null;
+}
+export interface GlmMcpBreakdownItem {
+    name: string;
+    usage: number | null;
+}
+export interface GlmData {
+    level: string | null;
+    five_hour: GlmWindowPercent | null;
+    monthly_mcp: GlmMonthlyMcp | null;
+    mcp_breakdown: GlmMcpBreakdownItem[];
+    models: GlmModelTokens[];
+    weekly_tokens: number | null;
+}
 export interface MemoryInfo {
     totalBytes: number;
     usedBytes: number;
@@ -135,5 +162,6 @@ export interface RenderContext {
     claudeCodeVersion?: string;
     effortLevel?: string;
     effortSymbol?: string;
+    glmData: GlmData | null;
 }
 //# sourceMappingURL=types.d.ts.map

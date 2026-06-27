@@ -14,7 +14,7 @@ export type GitBranchOverflowMode = 'truncate' | 'wrap';
 export type ModelFormatMode = 'full' | 'compact' | 'short';
 export type TimeFormatMode = 'relative' | 'absolute' | 'both' | 'elapsed' | 'elapsedAndAbsolute';
 export type CustomLinePosition = 'first' | 'last';
-export type HudElement = 'project' | 'addedDirs' | 'context' | 'usage' | 'promptCache' | 'memory' | 'environment' | 'tools' | 'skills' | 'mcp' | 'agents' | 'todos' | 'sessionTime';
+export type HudElement = 'project' | 'addedDirs' | 'context' | 'usage' | 'promptCache' | 'memory' | 'environment' | 'tools' | 'skills' | 'mcp' | 'agents' | 'todos' | 'sessionTime' | 'glmQuota';
 export type AddedDirsLayout = 'inline' | 'line';
 export type HudColorName = 'dim' | 'red' | 'green' | 'yellow' | 'magenta' | 'cyan' | 'brightBlue' | 'brightMagenta';
 /** A color value: named preset, 256-color index (0-255), or hex string (#rrggbb). */
@@ -98,6 +98,16 @@ export interface HudConfig {
         externalUsagePath: string;
         externalUsageWritePath: string;
         externalUsageFreshnessMs: number;
+        showGlmQuota: boolean;
+        showGlmLevel: boolean;
+        showGlmMonthlyMcp: boolean;
+        showGlmMcpTotal: boolean;
+        showGlmMcpBreakdown: boolean;
+        showGlmModels: boolean;
+        showGlmWeeklyTokens: boolean;
+        showGlmReset: boolean;
+        glmQuotaPath: string;
+        glmQuotaFreshnessMs: number;
         modelFormat: ModelFormatMode;
         modelOverride: string;
         showProvider: boolean;

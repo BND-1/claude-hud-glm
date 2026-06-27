@@ -14,6 +14,9 @@ export type MessageKey =
   | "label.lastReply"
   | "label.advisor"
   | "label.compactions"
+  | "label.glmQuota"
+  | "label.glmMcpMonthly"
+  | "label.glmWeekly"
   // Status
   | "status.limitReached"
   | "status.allTodosComplete"

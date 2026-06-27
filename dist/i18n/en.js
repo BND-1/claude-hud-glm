@@ -14,6 +14,9 @@ export const en = {
     "label.lastReply": "Last reply",
     "label.advisor": "Advisor",
     "label.compactions": "Compactions",
+    "label.glmQuota": "GLM",
+    "label.glmMcpMonthly": "MCP/mo",
+    "label.glmWeekly": "7d",
     // Status
     "status.limitReached": "Limit reached",
     "status.allTodosComplete": "All todos complete",

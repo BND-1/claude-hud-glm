@@ -10,6 +10,7 @@ import { getMemoryUsage } from "./memory.js";
 import { resolveEffortLevel } from "./effort.js";
 import { applyContextWindowFallback } from "./context-cache.js";
 import { getUsageFromExternalSnapshot, writeExternalUsageSnapshot } from "./external-usage.js";
+import { getGlmQuotaSnapshot } from "./glm-snapshot.js";
 import { setLanguage, t } from "./i18n/index.js";
 export { getUsageFromExternalSnapshot, writeExternalUsageSnapshot } from "./external-usage.js";
 import { fileURLToPath } from "node:url";
@@ -39,6 +40,7 @@ export async function main(overrides = {}) {
         getUsageFromStdin,
         getUsageFromExternalSnapshot,
         writeExternalUsageSnapshot,
+        getGlmQuotaSnapshot,
         parseTranscript,
         countConfigs,
         getGitStatus,
@@ -109,6 +111,23 @@ export async function main(overrides = {}) {
                 }
             }
         }
+        const glmData = config.display.showGlmQuota
+            ? deps.getGlmQuotaSnapshot(config, deps.now())
+            : null;
+        // Reuse the native Usage line for the 5h token window: feed Zhipu's 5h
+        // percentage into usageData.fiveHour (only when usage display is on and
+        // nothing else already populated it), so the existing bar/color/reset
+        // rendering is reused instead of reimplemented.
+        const glmFiveHour = glmData?.five_hour;
+        if (shouldReadUsage && glmFiveHour && glmFiveHour.used_percentage !== null) {
+            if (usageData === null) {
+                usageData = { fiveHour: null, sevenDay: null, fiveHourResetAt: null, sevenDayResetAt: null };
+            }
+            if (usageData.fiveHour === null) {
+                usageData.fiveHour = glmFiveHour.used_percentage;
+                usageData.fiveHourResetAt = glmFiveHour.resets_at;
+            }
+        }
         const extraCmd = deps.parseExtraCmdArg();
         const extraLabel = extraCmd ? await deps.runExtraCmd(extraCmd) : null;
         const sessionDuration = formatSessionDuration(transcript.sessionStart, deps.now);
@@ -138,6 +157,7 @@ export async function main(overrides = {}) {
             claudeCodeVersion,
             effortLevel: effortInfo?.level,
             effortSymbol: effortInfo?.symbol,
+            glmData,
         };
         deps.render(ctx);
     }

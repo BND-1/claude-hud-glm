@@ -9,6 +9,7 @@ const PROGRESS_LABEL_KEYS: MessageKey[] = [
   "label.context",
   "label.usage",
   "label.weekly",
+  "label.glmQuota",
 ];
 
 /**

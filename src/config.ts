@@ -37,7 +37,8 @@ export type HudElement =
   | 'mcp'
   | 'agents'
   | 'todos'
-  | 'sessionTime';
+  | 'sessionTime'
+  | 'glmQuota';
 
 export type AddedDirsLayout = 'inline' | 'line';
 export type HudColorName =
@@ -74,6 +75,7 @@ export const DEFAULT_ELEMENT_ORDER: HudElement[] = [
   'addedDirs',
   'context',
   'usage',
+  'glmQuota',
   'promptCache',
   'memory',
   'environment',
@@ -155,6 +157,19 @@ export interface HudConfig {
     externalUsagePath: string;
     externalUsageWritePath: string;
     externalUsageFreshnessMs: number;
+    // GLM/Zhipu coding-plan quota line. Data comes from a snapshot produced by
+    // fetch.mjs (see glm-snapshot.ts); each sub-item below is independently
+    // toggleable, mirroring the per-element config philosophy of the HUD.
+    showGlmQuota: boolean;
+    showGlmLevel: boolean;
+    showGlmMonthlyMcp: boolean;
+    showGlmMcpTotal: boolean;
+    showGlmMcpBreakdown: boolean;
+    showGlmModels: boolean;
+    showGlmWeeklyTokens: boolean;
+    showGlmReset: boolean;
+    glmQuotaPath: string;
+    glmQuotaFreshnessMs: number;
     modelFormat: ModelFormatMode;
     modelOverride: string;
     // Show the provider label (custom name or auto-detected Bedrock/Vertex/
@@ -241,6 +256,16 @@ export const DEFAULT_CONFIG: HudConfig = {
     externalUsagePath: '',
     externalUsageWritePath: '',
     externalUsageFreshnessMs: 300000,
+    showGlmQuota: false,
+    showGlmLevel: true,
+    showGlmMonthlyMcp: true,
+    showGlmMcpTotal: true,
+    showGlmMcpBreakdown: false,
+    showGlmModels: false,
+    showGlmWeeklyTokens: false,
+    showGlmReset: true,
+    glmQuotaPath: '',
+    glmQuotaFreshnessMs: 300000,
     modelFormat: 'full',
     modelOverride: '',
     showProvider: false,
@@ -677,6 +702,16 @@ export function mergeConfig(userConfig: Partial<HudConfig>): HudConfig {
     externalUsagePath: validateOptionalPath(migrated.display?.externalUsagePath),
     externalUsageWritePath: validateOptionalPath(migrated.display?.externalUsageWritePath),
     externalUsageFreshnessMs: validateFreshnessMs(migrated.display?.externalUsageFreshnessMs),
+    showGlmQuota: typeof migrated.display?.showGlmQuota === 'boolean' ? migrated.display.showGlmQuota : DEFAULT_CONFIG.display.showGlmQuota,
+    showGlmLevel: typeof migrated.display?.showGlmLevel === 'boolean' ? migrated.display.showGlmLevel : DEFAULT_CONFIG.display.showGlmLevel,
+    showGlmMonthlyMcp: typeof migrated.display?.showGlmMonthlyMcp === 'boolean' ? migrated.display.showGlmMonthlyMcp : DEFAULT_CONFIG.display.showGlmMonthlyMcp,
+    showGlmMcpTotal: typeof migrated.display?.showGlmMcpTotal === 'boolean' ? migrated.display.showGlmMcpTotal : DEFAULT_CONFIG.display.showGlmMcpTotal,
+    showGlmMcpBreakdown: typeof migrated.display?.showGlmMcpBreakdown === 'boolean' ? migrated.display.showGlmMcpBreakdown : DEFAULT_CONFIG.display.showGlmMcpBreakdown,
+    showGlmModels: typeof migrated.display?.showGlmModels === 'boolean' ? migrated.display.showGlmModels : DEFAULT_CONFIG.display.showGlmModels,
+    showGlmWeeklyTokens: typeof migrated.display?.showGlmWeeklyTokens === 'boolean' ? migrated.display.showGlmWeeklyTokens : DEFAULT_CONFIG.display.showGlmWeeklyTokens,
+    showGlmReset: typeof migrated.display?.showGlmReset === 'boolean' ? migrated.display.showGlmReset : DEFAULT_CONFIG.display.showGlmReset,
+    glmQuotaPath: validateOptionalPath(migrated.display?.glmQuotaPath),
+    glmQuotaFreshnessMs: validateFreshnessMs(migrated.display?.glmQuotaFreshnessMs),
     modelFormat: validateModelFormat(migrated.display?.modelFormat)
       ? migrated.display.modelFormat
       : DEFAULT_CONFIG.display.modelFormat,

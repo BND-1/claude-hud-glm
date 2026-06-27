@@ -14,6 +14,7 @@ import {
   renderEnvironmentLine,
   renderPromptCacheLine,
   renderUsageLine,
+  renderGlmQuotaLine,
   renderMemoryLine,
   renderSessionTokensLine,
   renderCompactionsLine,
@@ -403,6 +404,8 @@ function renderElementLine(
       return renderIdentityLine(ctx, alignProgressLabels);
     case 'usage':
       return renderUsageLine(ctx, alignProgressLabels);
+    case 'glmQuota':
+      return renderGlmQuotaLine(ctx, alignProgressLabels);
     case 'promptCache':
       return renderPromptCacheLine(ctx);
     case 'memory':
