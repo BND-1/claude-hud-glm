@@ -35,8 +35,16 @@ const TOKEN = process.env.ANTHROPIC_AUTH_TOKEN || '';
 const BASE_URL = process.env.ANTHROPIC_BASE_URL || '';
 const FORCE = process.argv.includes('--force');
 const PRINT_ONLY = process.argv.includes('--print');
+// Resolve the Claude config dir the same way the HUD does (CLAUDE_CONFIG_DIR
+// or ~/.claude) so fetch.mjs and glm-snapshot agree on the snapshot path even
+// under a custom CLAUDE_CONFIG_DIR.
+const CLAUDE_DIR = process.env.CLAUDE_CONFIG_DIR
+  ? (process.env.CLAUDE_CONFIG_DIR.startsWith('~/')
+      ? path.join(os.homedir(), process.env.CLAUDE_CONFIG_DIR.slice(2))
+      : path.resolve(process.env.CLAUDE_CONFIG_DIR))
+  : path.join(os.homedir(), '.claude');
 const SNAPSHOT_PATH = process.env.GLM_USAGE_PATH
-  || path.join(os.homedir(), '.claude', 'glm-usage.json');
+  || path.join(CLAUDE_DIR, 'glm-usage.json');
 const TTL_MS = Number(process.env.GLM_TTL_MS) || 240000;
 const FETCH_MODELS = (process.env.GLM_FETCH_MODELS ?? '1') !== '0';
 

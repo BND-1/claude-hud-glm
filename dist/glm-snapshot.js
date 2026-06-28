@@ -2,8 +2,13 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as os from 'node:os';
 import { createDebug } from './debug.js';
+import { getClaudeConfigDir } from './claude-config-dir.js';
 const debug = createDebug('glm-snapshot');
-const DEFAULT_SNAPSHOT_PATH = path.join(os.homedir(), '.claude', 'glm-usage.json');
+// Default snapshot path respects CLAUDE_CONFIG_DIR (so isolated test/custom
+// configs don't read the real ~/.claude/glm-usage.json). Mirrors fetch.mjs.
+function defaultSnapshotPath() {
+    return path.join(getClaudeConfigDir(os.homedir()), 'glm-usage.json');
+}
 function parsePercent(value) {
     if (typeof value !== 'number' || !Number.isFinite(value))
         return null;
@@ -100,7 +105,7 @@ function parseBreakdown(value) {
  */
 export function getGlmQuotaSnapshot(config, now = Date.now()) {
     const configured = config.display.glmQuotaPath?.trim();
-    const snapshotPath = configured ? configured : DEFAULT_SNAPSHOT_PATH;
+    const snapshotPath = configured ? configured : defaultSnapshotPath();
     if (!snapshotPath || !path.isAbsolute(snapshotPath)) {
         return null;
     }

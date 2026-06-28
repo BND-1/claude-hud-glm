@@ -1,7 +1,7 @@
 {
   "name": "claude-hud-glm",
   "description": "Real-time statusline HUD for Claude Code - context, tools, agents, todos + GLM/Zhipu coding-plan quota",
-  "version": "0.3.0-glm.1",
+  "version": "0.3.0-glm.2",
   "author": {
     "name": "BND-1",
     "url": "https://github.com/BND-1"

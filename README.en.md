@@ -38,11 +38,11 @@ In Claude Code:
 
 `/claude-hud-glm:setup` writes the statusLine (wired to the GLM fetcher), backs up the previous one, and verifies it renders.
 
-**To see the GLM line**, add to `~/.claude/plugins/claude-hud/config.json`:
+**To see the GLM line**, add to `~/.claude/plugins/claude-hud-glm/config.json`:
 ```jsonc
 { "display": { "showGlmQuota": true } }
 ```
-> The config directory is hardcoded to `claude-hud`, so the path stays `~/.claude/plugins/claude-hud/config.json` even for this plugin — that's expected, not a typo.
+> Upgrading from an earlier version? Your config is auto-migrated from `~/.claude/plugins/claude-hud/` to `claude-hud-glm/` on first run.
 
 **GLM quota requires** `ANTHROPIC_AUTH_TOKEN` + `ANTHROPIC_BASE_URL` (pointing at `open.bigmodel.cn` or `api.z.ai`) in the environment — these are already present on any machine where Claude Code itself runs against Zhipu/Z.ai. On an Anthropic setup the HUD still works; the GLM line is just empty (hidden, no error).
 
@@ -54,7 +54,7 @@ In Claude Code:
 
 ## Everything else
 
-This is a strict superset of [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud) — every original feature is intact: context bar, active tools, running agents, todo progress, usage limits, session tokens, prompt cache, git status, cost, memory, and more. Configure them with `/claude-hud-glm:configure` or by editing `~/.claude/plugins/claude-hud/config.json`. See the [upstream README](https://github.com/jarrodwatts/claude-hud#readme) for the full feature catalog.
+This is a strict superset of [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud) — every original feature is intact: context bar, active tools, running agents, todo progress, usage limits, session tokens, prompt cache, git status, cost, memory, and more. Configure them with `/claude-hud-glm:configure` or by editing `~/.claude/plugins/claude-hud-glm/config.json`. See the [upstream README](https://github.com/jarrodwatts/claude-hud#readme) for the full feature catalog.
 
 ## Sync with upstream
 

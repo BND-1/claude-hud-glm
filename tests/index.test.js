@@ -25,6 +25,7 @@ function makeConfig(overrides = {}) {
     },
     display: {
       ...DEFAULT_CONFIG.display,
+      showGlmQuota: false, // isolate unit tests from the real ~/.claude/glm-usage.json
       ...(overrides.display ?? {}),
     },
     colors: {

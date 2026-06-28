@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "claude-hud fork with a configurable GLM/Zhipu coding-plan quota line for the Claude Code statusline",
-    "version": "0.3.0-glm.1"
+    "version": "0.3.0-glm.2"
   },
   "plugins": [
     {

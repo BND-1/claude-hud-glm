@@ -23,7 +23,7 @@ HUD 渲染必须很快,**绝不在渲染时发网络请求**。所以由独立�
 
 ## 展示项与配置开关
 
-在 `~/.claude/plugins/claude-hud/config.json` 的 `display` 里开关(全部默认按需,`showGlmQuota`
+在 `~/.claude/plugins/claude-hud-glm/config.json` 的 `display` 里开关(全部默认按需,`showGlmQuota`
 默认 `false`,开启它才会出现 GLM 行):
 
 | 展示项 | config 开关 | 默认 | 示例 |
@@ -66,7 +66,7 @@ GLM max │ MCP月 ██░░░░░░░░ 18% (744/4000) │ GLM-5.2 3.3
 
 ## 安装
 
-> 两种等价方式,配置文件共用同一路径(`~/.claude/plugins/claude-hud/config.json`),切换不丢配置。
+> 两种等价方式,配置文件共用同一路径(`~/.claude/plugins/claude-hud-glm/config.json`),切换不丢配置。
 
 ### 方式 A:作为插件安装(推荐,纯插件体验)
 
@@ -104,7 +104,7 @@ statusLine 直接指向 clone 的 launcher(脚本自解析目录、从 PATH/nvm/
 "statusLine": { "type": "command", "command": "bash /绝对路径/claude-hud-glm/run-statusline.sh" }
 ```
 
-然后在 `~/.claude/plugins/claude-hud/config.json` 的 `display` 加 `"showGlmQuota": true`。
+然后在 `~/.claude/plugins/claude-hud-glm/config.json` 的 `display` 加 `"showGlmQuota": true`。
 
 ---
 

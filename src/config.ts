@@ -1,7 +1,7 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as os from 'node:os';
-import { getHudPluginDir } from './claude-config-dir.js';
+import { getHudPluginDir, getLegacyHudPluginDir } from './claude-config-dir.js';
 import { createDebug } from './debug.js';
 import type { Language } from './i18n/types.js';
 
@@ -259,7 +259,7 @@ export const DEFAULT_CONFIG: HudConfig = {
     externalUsagePath: '',
     externalUsageWritePath: '',
     externalUsageFreshnessMs: 300000,
-    showGlmQuota: false,
+    showGlmQuota: true,
     showGlmLevel: true,
     showGlmMonthlyMcp: true,
     showGlmMcpTotal: true,
@@ -797,8 +797,28 @@ export function mergeConfig(userConfig: Partial<HudConfig>): HudConfig {
   return { language, lineLayout, showSeparators, pathLevels, maxWidth, forceMaxWidth, elementOrder, gitStatus, display, colors };
 }
 
+/**
+ * One-time migration: this fork used to read the upstream's config at
+ * ~/.claude/plugins/claude-hud/config.json. On first run after the dir rename,
+ * copy an existing legacy config into the fork's own dir so users keep their
+ * settings. Best-effort — never blocks rendering.
+ */
+function migrateLegacyConfig(configPath: string): void {
+  try {
+    if (fs.existsSync(configPath)) return;
+    const legacyPath = path.join(getLegacyHudPluginDir(os.homedir()), 'config.json');
+    if (!fs.existsSync(legacyPath)) return;
+    fs.mkdirSync(path.dirname(configPath), { recursive: true });
+    fs.copyFileSync(legacyPath, configPath);
+    debug('Migrated config from %s to %s', legacyPath, configPath);
+  } catch (err) {
+    debug('Config migration failed:', err instanceof Error ? err.message : err);
+  }
+}
+
 export async function loadConfig(): Promise<HudConfig> {
   const configPath = getConfigPath();
+  migrateLegacyConfig(configPath);
 
   try {
     if (!fs.existsSync(configPath)) {

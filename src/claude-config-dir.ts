@@ -23,5 +23,11 @@ export function getClaudeConfigJsonPath(homeDir: string): string {
 }
 
 export function getHudPluginDir(homeDir: string): string {
+  return path.join(getClaudeConfigDir(homeDir), 'plugins', 'claude-hud-glm');
+}
+
+// Legacy path used before this fork owned its own dir. Kept only for the
+// one-time config migration in loadConfig() — do not use for new writes.
+export function getLegacyHudPluginDir(homeDir: string): string {
   return path.join(getClaudeConfigDir(homeDir), 'plugins', 'claude-hud');
 }

@@ -34,8 +34,14 @@ export COLUMNS=$(( ${cols:-120} > 4 ? ${cols:-120} - 4 : 1 ))
 
 # Refresh only when stale (or missing). Backgrounded + non-blocking; fetch.mjs
 # also self-throttles, so a rare overlap just rewrites identical data.
-# stat mtime: macOS/BSD uses -f %m, Linux uses -c %Y — try both for portability.
-snap_mtime=$(stat -f %m "$SNAP" 2>/dev/null || stat -c %Y "$SNAP" 2>/dev/null || echo 0)
+# stat mtime: try Linux (-c %Y) first, then macOS/BSD (-f %m). Order matters:
+# GNU `stat -f %m FILE` does NOT fail cleanly — it dumps filesystem info to
+# stdout and exits 1, which would corrupt snap_mtime via the || chain. Linux
+# `stat -c %Y` succeeds with a clean epoch; macOS `stat -c %Y` is unsupported
+# (non-zero exit, empty stdout) so the || correctly falls through to -f %m.
+snap_mtime=$(stat -c %Y "$SNAP" 2>/dev/null || stat -f %m "$SNAP" 2>/dev/null || echo 0)
+# Guard against any non-numeric output (defence-in-depth for odd stat variants).
+case "$snap_mtime" in *[!0-9]*|'') snap_mtime=0;; esac
 now=$(date +%s)
 if [ $(( now - snap_mtime )) -ge "$TTL" ]; then
   ( "$NODE" "$FORK/fetch.mjs" >/dev/null 2>&1 & )

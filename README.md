@@ -38,11 +38,11 @@ GLM max │ MCP月 ◔ 18% (744/4000) │ 重置剩余 16d 14h
 
 `/claude-hud-glm:setup` 会写好 statusLine(已接好 GLM fetcher)、备份原 statusLine、并验证渲染。
 
-**要显示 GLM 行**,在 `~/.claude/plugins/claude-hud/config.json` 加:
+**要显示 GLM 行**,在 `~/.claude/plugins/claude-hud-glm/config.json` 加:
 ```jsonc
 { "display": { "showGlmQuota": true } }
 ```
-> 配置目录硬编码为 `claude-hud`,所以即使装的是本插件,路径仍是 `~/.claude/plugins/claude-hud/config.json`——这是正常的,不是写错。
+> 从早期版本升级?首次运行会自动把配置从 `~/.claude/plugins/claude-hud/` 迁移到 `claude-hud-glm/`。
 
 **GLM 额度的前提**:环境里要有 `ANTHROPIC_AUTH_TOKEN` + `ANTHROPIC_BASE_URL`(指向 `open.bigmodel.cn` 或 `api.z.ai`)。Claude Code 本身就靠这俩跑智谱/Z.ai,所以智谱机器上天然就有;若是 Anthropic 官方环境,HUD 照常工作,只是 GLM 行没数据(自动隐藏,不报错)。
 
@@ -54,7 +54,7 @@ GLM max │ MCP月 ◔ 18% (744/4000) │ 重置剩余 16d 14h
 
 ## 其它
 
-本插件是 [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud) 的**超集**——原版所有功能都在:上下文进度、活跃工具、运行中 Agent、待办进度、用量限制、会话 token、缓存、git 状态、费用、内存等。用 `/claude-hud-glm:configure` 或直接编辑 `~/.claude/plugins/claude-hud/config.json` 配置。完整功能清单见[上游 README](https://github.com/jarrodwatts/claude-hud#readme)。
+本插件是 [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud) 的**超集**——原版所有功能都在:上下文进度、活跃工具、运行中 Agent、待办进度、用量限制、会话 token、缓存、git 状态、费用、内存等。用 `/claude-hud-glm:configure` 或直接编辑 `~/.claude/plugins/claude-hud-glm/config.json` 配置。完整功能清单见[上游 README](https://github.com/jarrodwatts/claude-hud#readme)。
 
 ## 与上游同步
 
