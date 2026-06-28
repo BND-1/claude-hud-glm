@@ -1,69 +1,69 @@
 # claude-hud-glm
 
-A Claude Code statusline plugin — context, tools, agents, todos, **plus a live GLM / 智谱 (Zhipu) or Z.ai coding-plan quota line**. A fork of [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud).
+一个 Claude Code 状态栏插件——展示上下文、工具、Agent、待办,**并常驻显示 GLM / 智谱(或 Z.ai)套餐额度**。[jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud) 的 fork。
 
-> 🌐 English | [中文文档](README.zh.md) | [GLM 额度接入说明](GLM_QUOTA.md)
+> 🌐 [English](README.en.md) | 中文文档 | [GLM 额度接入说明](GLM_QUOTA.md)
 
-![claude-hud-glm in action](claude-hud-preview-5-2.png)
+![claude-hud-glm 效果](claude-hud-glm-preview.png)
 
-Example statusline (with the GLM line, `ring` style):
+状态栏示例(带 GLM 行,`ring` 样式):
 ```
 [GLM-5.2 (1M context)] │ my-project git:(main*)
-Context ◑ 37% │ Usage ◔ 7% (resets in 2h 38m)
-GLM max │ MCP/mo ◔ 18% (744/4000) │ resets in 16d 14h
-◐ Edit: auth.ts │ ▸ Fix login (2/5)
+上下文 ◑ 37% │ 用量 ◔ 7% (重置剩余 2h 38m)
+GLM max │ MCP月 ◔ 18% (744/4000) │ 重置剩余 16d 14h
+◐ Edit: auth.ts │ ▸ 修复登录 (2/5)
 ```
 
-## What this fork adds
+## 这个 fork 新增了什么
 
-A configurable **GLM quota line**, driven by a background snapshot (the HUD never calls the network while rendering):
+一条可配置的 **GLM 额度行**,由后台快照驱动(HUD 渲染时不发任何网络请求):
 
-- **5h token quota** — reuses the native Usage bar/ring
-- **Monthly MCP tool-call quota** (e.g. `744/4000`)
-- Per-tool breakdown · per-model token totals · 7-day token estimate · reset countdown
-- 8 independent `display.showGlm*` toggles
+- **5 小时 token 额度** —— 复用原生 Usage 进度条/环形
+- **月度 MCP 工具调用配额**(如 `744/4000`)
+- 每工具明细 · 各模型 token · 近 7 天 token 近似 · 重置倒计时
+- 8 个独立可勾选的 `display.showGlm*` 开关
 
-Full toggle list + setup notes: **[GLM_QUOTA.md](GLM_QUOTA.md)**.
+完整开关列表与设置说明:**[GLM_QUOTA.md](GLM_QUOTA.md)**。
 
-> Zhipu's API exposes **no weekly quota** (the 7-day figure is a self-computed token sum, not a %); the **monthly** figure is the **MCP tool-call** quota (call count), not tokens.
+> 智谱后端**没有"周"配额**(那个 7 天数字是自己累加的 token 总量,不是百分比);"月额度"是 **MCP 工具调用**配额(次数),不是 token。
 
-## Install
+## 安装
 
-In Claude Code:
+在 Claude Code 里依次运行:
 ```
 /plugin marketplace add BND-1/claude-hud-glm
 /plugin install claude-hud-glm@claude-hud-glm
 /claude-hud-glm:setup
 ```
 
-`/claude-hud-glm:setup` writes the statusLine (wired to the GLM fetcher), backs up the previous one, and verifies it renders.
+`/claude-hud-glm:setup` 会写好 statusLine(已接好 GLM fetcher)、备份原 statusLine、并验证渲染。
 
-**To see the GLM line**, add to `~/.claude/plugins/claude-hud/config.json`:
+**要显示 GLM 行**,在 `~/.claude/plugins/claude-hud/config.json` 加:
 ```jsonc
 { "display": { "showGlmQuota": true } }
 ```
-> The config directory is hardcoded to `claude-hud`, so the path stays `~/.claude/plugins/claude-hud/config.json` even for this plugin — that's expected, not a typo.
+> 配置目录硬编码为 `claude-hud`,所以即使装的是本插件,路径仍是 `~/.claude/plugins/claude-hud/config.json`——这是正常的,不是写错。
 
-**GLM quota requires** `ANTHROPIC_AUTH_TOKEN` + `ANTHROPIC_BASE_URL` (pointing at `open.bigmodel.cn` or `api.z.ai`) in the environment — these are already present on any machine where Claude Code itself runs against Zhipu/Z.ai. On an Anthropic setup the HUD still works; the GLM line is just empty (hidden, no error).
+**GLM 额度的前提**:环境里要有 `ANTHROPIC_AUTH_TOKEN` + `ANTHROPIC_BASE_URL`(指向 `open.bigmodel.cn` 或 `api.z.ai`)。Claude Code 本身就靠这俩跑智谱/Z.ai,所以智谱机器上天然就有;若是 Anthropic 官方环境,HUD 照常工作,只是 GLM 行没数据(自动隐藏,不报错)。
 
-## Progress style
+## 进度样式
 
 `display.barStyle`:
-- `bar` (default) — `███░░░░░░░ 37%`
-- `ring` — compact `◑ 37%` (single Unicode ring/pie glyph, ~5 levels)
+- `bar`(默认)—— `███░░░░░░░ 37%`
+- `ring` —— 紧凑 `◑ 37%`(单个 Unicode 环/饼字符,约 5 档)
 
-## Everything else
+## 其它
 
-This is a strict superset of [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud) — every original feature is intact: context bar, active tools, running agents, todo progress, usage limits, session tokens, prompt cache, git status, cost, memory, and more. Configure them with `/claude-hud-glm:configure` or by editing `~/.claude/plugins/claude-hud/config.json`. See the [upstream README](https://github.com/jarrodwatts/claude-hud#readme) for the full feature catalog.
+本插件是 [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud) 的**超集**——原版所有功能都在:上下文进度、活跃工具、运行中 Agent、待办进度、用量限制、会话 token、缓存、git 状态、费用、内存等。用 `/claude-hud-glm:configure` 或直接编辑 `~/.claude/plugins/claude-hud/config.json` 配置。完整功能清单见[上游 README](https://github.com/jarrodwatts/claude-hud#readme)。
 
-## Sync with upstream
+## 与上游同步
 
 ```bash
-git remote add upstream https://github.com/jarrodwatts/claude-hud   # once
+git remote add upstream https://github.com/jarrodwatts/claude-hud   # 只需一次
 git fetch upstream && git rebase upstream/main
 ```
-GLM-specific changes are concentrated in `src/config.ts`, `src/render/index.ts`, `src/glm-snapshot.ts`, `src/render/lines/glm-quota.ts`, and `fetch.mjs` — rebases rarely conflict.
+GLM 相关改动集中在 `src/config.ts`、`src/render/index.ts`、`src/glm-snapshot.ts`、`src/render/lines/glm-quota.ts`、`fetch.mjs`,rebase 很少冲突。
 
-## Credits
+## 致谢
 
-Forked from [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud) by Jarrod Watts. GLM/Zhipu quota integration and branding added in this fork. MIT licensed.
+Fork 自 [jarrodwatts/claude-hud](https://github.com/jarrodwatts/claude-hud)(作者 Jarrod Watts)。本 fork 在其基础上增加了 GLM/智谱额度集成并做了品牌化。MIT 协议。
