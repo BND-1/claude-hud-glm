@@ -1,5 +1,6 @@
 # Maintainers
 
-- Jarrod Watts (https://github.com/jarrodwatts)
+- BND-1 (https://github.com/BND-1)
 
-If you are interested in becoming a maintainer, open an issue to start the conversation.
+This fork (`claude-hud-glm`) is maintained by BND-1. The original `claude-hud`
+project is by Jarrod Watts (https://github.com/jarrodwatts).

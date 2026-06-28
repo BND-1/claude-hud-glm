@@ -1,20 +1,20 @@
 {
-  "name": "claude-hud",
+  "name": "claude-hud-glm",
   "owner": {
-    "name": "Jarrod Watts",
-    "email": "jarrodwattsyt@gmail.com"
+    "name": "BND-1",
+    "url": "https://github.com/BND-1"
   },
   "metadata": {
-    "description": "Real-time statusline HUD for Claude Code - context health, tool activity, agent tracking, and todo progress",
-    "version": "0.3.0"
+    "description": "claude-hud fork with a configurable GLM/Zhipu coding-plan quota line for the Claude Code statusline",
+    "version": "0.3.0-glm.1"
   },
   "plugins": [
     {
-      "name": "claude-hud",
+      "name": "claude-hud-glm",
       "source": "./",
-      "description": "Real-time statusline showing context usage, active tools, running agents, and todo progress. Always visible below your input, zero config required.",
+      "description": "Claude Code statusline HUD (context, tools, agents, todos) plus a live GLM/Zhipu coding-plan quota line.",
       "category": "monitoring",
-      "tags": ["hud", "statusline", "monitoring", "context", "tools", "agents", "todos"]
+      "tags": ["hud", "statusline", "monitoring", "context", "tools", "glm", "zhipu"]
     }
   ]
 }
