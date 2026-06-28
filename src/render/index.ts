@@ -20,7 +20,7 @@ import {
   renderCompactionsLine,
   renderSessionTimeLine,
 } from './lines/index.js';
-import { dim, RESET } from './colors.js';
+import { dim, RESET, setBarStyle } from './colors.js';
 import { getTerminalWidth, UNKNOWN_TERMINAL_WIDTH } from '../utils/terminal.js';
 import { codePointCellWidth, isCjkAmbiguousWide } from './width.js';
 
@@ -527,6 +527,7 @@ function renderExpanded(ctx: RenderContext, terminalWidth: number | null = null)
 }
 
 export function render(ctx: RenderContext): void {
+  setBarStyle(ctx.config?.display?.barStyle ?? 'bar');
   const lineLayout = ctx.config?.lineLayout ?? 'expanded';
   const showSeparators = ctx.config?.showSeparators ?? false;
   const detectedWidth = getTerminalWidth({ preferEnv: true, fallback: UNKNOWN_TERMINAL_WIDTH });

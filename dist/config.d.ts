@@ -14,6 +14,7 @@ export type GitBranchOverflowMode = 'truncate' | 'wrap';
 export type ModelFormatMode = 'full' | 'compact' | 'short';
 export type TimeFormatMode = 'relative' | 'absolute' | 'both' | 'elapsed' | 'elapsedAndAbsolute';
 export type CustomLinePosition = 'first' | 'last';
+export type BarStyle = 'bar' | 'ring';
 export type HudElement = 'project' | 'addedDirs' | 'context' | 'usage' | 'promptCache' | 'memory' | 'environment' | 'tools' | 'skills' | 'mcp' | 'agents' | 'todos' | 'sessionTime' | 'glmQuota';
 export type AddedDirsLayout = 'inline' | 'line';
 export type HudColorName = 'dim' | 'red' | 'green' | 'yellow' | 'magenta' | 'cyan' | 'brightBlue' | 'brightMagenta';
@@ -68,6 +69,7 @@ export interface HudConfig {
         showUsage: boolean;
         usageValue: UsageValueMode;
         usageBarEnabled: boolean;
+        barStyle: BarStyle;
         showResetLabel: boolean;
         usageCompact: boolean;
         showTools: boolean;

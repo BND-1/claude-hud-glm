@@ -56,6 +56,7 @@ export const DEFAULT_CONFIG = {
         showUsage: true,
         usageValue: 'percent',
         usageBarEnabled: true,
+        barStyle: 'bar',
         showResetLabel: true,
         usageCompact: false,
         showTools: false,
@@ -160,6 +161,9 @@ function validateTimeFormat(value) {
 }
 function validateCustomLinePosition(value) {
     return value === 'first' || value === 'last';
+}
+function validateBarStyle(value) {
+    return value === 'bar' || value === 'ring';
 }
 function validateColorName(value) {
     return value === 'dim'
@@ -407,6 +411,9 @@ export function mergeConfig(userConfig) {
         usageBarEnabled: typeof migrated.display?.usageBarEnabled === 'boolean'
             ? migrated.display.usageBarEnabled
             : DEFAULT_CONFIG.display.usageBarEnabled,
+        barStyle: validateBarStyle(migrated.display?.barStyle)
+            ? migrated.display.barStyle
+            : DEFAULT_CONFIG.display.barStyle,
         showResetLabel: typeof migrated.display?.showResetLabel === 'boolean'
             ? migrated.display.showResetLabel
             : DEFAULT_CONFIG.display.showResetLabel,

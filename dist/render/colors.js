@@ -1,4 +1,30 @@
 export const RESET = '\x1b[0m';
+// Per-render progress style, set from config by render(). 'bar' = classic block
+// bar; 'ring' = single compact Unicode ring/pie glyph. Defaults to 'bar' so all
+// callers (and tests) keep the original behavior unless configured otherwise.
+let currentBarStyle = 'bar';
+export function setBarStyle(style) {
+    currentBarStyle = style;
+}
+/**
+ * Compact ring/pie glyph for a percentage. Coarse (~5 levels) — the caller
+ * always renders the exact percentage beside it, so the glyph is just an
+ * at-a-glance indicator. ◌ = unknown.
+ */
+export function ringGlyph(percent) {
+    if (!Number.isFinite(percent))
+        return '◌';
+    const p = Math.min(100, Math.max(0, percent));
+    if (p >= 95)
+        return '●';
+    if (p >= 62)
+        return '◕';
+    if (p >= 37)
+        return '◑';
+    if (p >= 5)
+        return '◔';
+    return '○';
+}
 const DIM = '\x1b[2m';
 const RED = '\x1b[31m';
 const GREEN = '\x1b[32m';
@@ -109,8 +135,11 @@ export function getQuotaColor(percent, colors) {
     return resolveAnsi(colors?.usage, BRIGHT_BLUE);
 }
 export function quotaBar(percent, width = 10, colors) {
-    const safeWidth = Number.isFinite(width) ? Math.max(0, Math.round(width)) : 0;
     const safePercent = Number.isFinite(percent) ? Math.min(100, Math.max(0, percent)) : 0;
+    if (currentBarStyle === 'ring') {
+        return `${getQuotaColor(safePercent, colors)}${ringGlyph(safePercent)}${RESET}`;
+    }
+    const safeWidth = Number.isFinite(width) ? Math.max(0, Math.round(width)) : 0;
     const filled = Math.round((safePercent / 100) * safeWidth);
     const empty = safeWidth - filled;
     const color = getQuotaColor(safePercent, colors);
@@ -121,6 +150,9 @@ export function quotaBar(percent, width = 10, colors) {
 export function coloredBar(percent, width = 10, colors, thresholds) {
     const safeWidth = Number.isFinite(width) ? Math.max(0, Math.round(width)) : 0;
     const safePercent = Number.isFinite(percent) ? Math.min(100, Math.max(0, percent)) : 0;
+    if (currentBarStyle === 'ring') {
+        return `${getContextColor(safePercent, colors, thresholds)}${ringGlyph(safePercent)}${RESET}`;
+    }
     const filled = Math.round((safePercent / 100) * safeWidth);
     const empty = safeWidth - filled;
     const color = getContextColor(safePercent, colors, thresholds);

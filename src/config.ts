@@ -24,6 +24,7 @@ export type GitBranchOverflowMode = 'truncate' | 'wrap';
 export type ModelFormatMode = 'full' | 'compact' | 'short';
 export type TimeFormatMode = 'relative' | 'absolute' | 'both' | 'elapsed' | 'elapsedAndAbsolute';
 export type CustomLinePosition = 'first' | 'last';
+export type BarStyle = 'bar' | 'ring';
 export type HudElement =
   | 'project'
   | 'addedDirs'
@@ -125,6 +126,7 @@ export interface HudConfig {
     showUsage: boolean;
     usageValue: UsageValueMode;
     usageBarEnabled: boolean;
+    barStyle: BarStyle;
     showResetLabel: boolean;
     usageCompact: boolean;
     showTools: boolean;
@@ -226,6 +228,7 @@ export const DEFAULT_CONFIG: HudConfig = {
     showUsage: true,
     usageValue: 'percent',
     usageBarEnabled: true,
+    barStyle: 'bar',
     showResetLabel: true,
     usageCompact: false,
     showTools: false,
@@ -341,6 +344,10 @@ function validateTimeFormat(value: unknown): value is TimeFormatMode {
 
 function validateCustomLinePosition(value: unknown): value is CustomLinePosition {
   return value === 'first' || value === 'last';
+}
+
+function validateBarStyle(value: unknown): value is BarStyle {
+  return value === 'bar' || value === 'ring';
 }
 
 function validateColorName(value: unknown): value is HudColorName {
@@ -621,6 +628,9 @@ export function mergeConfig(userConfig: Partial<HudConfig>): HudConfig {
     usageBarEnabled: typeof migrated.display?.usageBarEnabled === 'boolean'
       ? migrated.display.usageBarEnabled
       : DEFAULT_CONFIG.display.usageBarEnabled,
+    barStyle: validateBarStyle(migrated.display?.barStyle)
+      ? migrated.display.barStyle
+      : DEFAULT_CONFIG.display.barStyle,
     showResetLabel: typeof migrated.display?.showResetLabel === 'boolean'
       ? migrated.display.showResetLabel
       : DEFAULT_CONFIG.display.showResetLabel,

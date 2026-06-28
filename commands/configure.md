@@ -301,6 +301,7 @@ If user chooses "Remove", set `display.customLine` to `""` in config.
 | Session cost | `display.showCost` |
 | Usage limits | `display.showUsage` |
 | Usage bar style | `display.usageBarEnabled` |
+| Progress style | `display.barStyle` (`bar` block bar / `ring` compact ring glyph) |
 | Compact usage | `display.usageCompact` |
 | Usage value | `display.usageValue` |
 | Usage reset label | `display.showResetLabel` |
