@@ -34,7 +34,8 @@ export COLUMNS=$(( ${cols:-120} > 4 ? ${cols:-120} - 4 : 1 ))
 
 # Refresh only when stale (or missing). Backgrounded + non-blocking; fetch.mjs
 # also self-throttles, so a rare overlap just rewrites identical data.
-snap_mtime=$(stat -f %m "$SNAP" 2>/dev/null || echo 0)
+# stat mtime: macOS/BSD uses -f %m, Linux uses -c %Y — try both for portability.
+snap_mtime=$(stat -f %m "$SNAP" 2>/dev/null || stat -c %Y "$SNAP" 2>/dev/null || echo 0)
 now=$(date +%s)
 if [ $(( now - snap_mtime )) -ge "$TTL" ]; then
   ( "$NODE" "$FORK/fetch.mjs" >/dev/null 2>&1 & )
