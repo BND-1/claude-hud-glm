@@ -25,7 +25,7 @@ export const DEFAULT_MERGE_GROUPS = [
 ];
 const KNOWN_ELEMENTS = new Set(DEFAULT_ELEMENT_ORDER);
 export const DEFAULT_CONFIG = {
-    language: 'en',
+    language: 'zh-Hans',
     lineLayout: 'expanded',
     showSeparators: false,
     pathLevels: 1,

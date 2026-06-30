@@ -197,7 +197,7 @@ export interface HudConfig {
 }
 
 export const DEFAULT_CONFIG: HudConfig = {
-  language: 'en',
+  language: 'zh-Hans',
   lineLayout: 'expanded',
   showSeparators: false,
   pathLevels: 1,

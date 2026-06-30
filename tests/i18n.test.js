@@ -71,9 +71,9 @@ test("setLanguage and getLanguage round-trip", () => {
   assert.equal(getLanguage(), "en");
 });
 
-test("mergeConfig defaults to English when no language is specified", () => {
+test("mergeConfig defaults to Chinese (zh-Hans) when no language is specified", () => {
   const config = mergeConfig({});
-  assert.equal(config.language, "en");
+  assert.equal(config.language, "zh-Hans");
 });
 
 test("mergeConfig preserves explicit language from config", () => {
@@ -84,9 +84,9 @@ test("mergeConfig preserves explicit language from config", () => {
   assert.equal(config2.language, "en");
 });
 
-test("mergeConfig falls back to English for invalid language", () => {
+test("mergeConfig falls back to Chinese (zh-Hans) for invalid language", () => {
   const config = mergeConfig({ language: "invalid" });
-  assert.equal(config.language, "en");
+  assert.equal(config.language, "zh-Hans");
 });
 
 test("renderSessionTokensLine uses translated labels in English", () => {
