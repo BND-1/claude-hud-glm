@@ -3,6 +3,8 @@ description: Configure claude-hud-glm as your statusline
 allowed-tools: Bash, Read, Edit, AskUserQuestion
 ---
 
+> **语言**:本流程全程用**简体中文**与用户交流——状态播报、错误提示(如找不到 node)、提问(如末尾的 star 引导)、结果汇报都用中文。命令 / 代码 / 路径保持原样。仅当用户明确要英文时才用英文。
+
 **Note**: Placeholders like `{RUNTIME_PATH}`, `{SOURCE}`, and `{GENERATED_COMMAND}` should be substituted with actual detected values.
 
 ## Step 0: Detect Ghost Installation (Run First)

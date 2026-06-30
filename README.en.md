@@ -33,24 +33,27 @@ In Claude Code:
 ```
 /plugin marketplace add BND-1/claude-hud-glm
 /plugin install claude-hud-glm@claude-hud-glm
+```
+**Restart Claude Code** (so the plugin and its commands load), then:
+```
 /claude-hud-glm:setup
 ```
+`/claude-hud-glm:setup` writes the statusLine (wired to the GLM fetcher), backs up the previous one, talks you through it, and verifies it renders.
 
-`/claude-hud-glm:setup` writes the statusLine (wired to the GLM fetcher), backs up the previous one, and verifies it renders.
-
-**To see the GLM line**, add to `~/.claude/plugins/claude-hud-glm/config.json`:
-```jsonc
-{ "display": { "showGlmQuota": true } }
-```
+> The GLM quota line is **on by default** — it shows out of the box on Zhipu machines, no config edit needed. Toggle or tweak sub-items with `/claude-hud-glm:configure`.
 > Upgrading from an earlier version? Your config is auto-migrated from `~/.claude/plugins/claude-hud/` to `claude-hud-glm/` on first run.
 
 **GLM quota requires** `ANTHROPIC_AUTH_TOKEN` + `ANTHROPIC_BASE_URL` (pointing at `open.bigmodel.cn` or `api.z.ai`) in the environment — these are already present on any machine where Claude Code itself runs against Zhipu/Z.ai. On an Anthropic setup the HUD still works; the GLM line is just empty (hidden, no error).
 
 ## Progress style
 
-`display.barStyle`:
-- `bar` (default) — `███░░░░░░░ 37%`
-- `ring` — compact `◑ 37%` (single Unicode ring/pie glyph, ~5 levels)
+`display.barStyle` — two options (switch via `/claude-hud-glm:configure`):
+
+**Bar** (`bar`, default):
+![Bar style](claude-hud-glm-preview-bar.png)
+
+**Ring / pie** (`ring`, compact):
+![Ring style](claude-hud-glm-preview.png)
 
 ## Everything else
 

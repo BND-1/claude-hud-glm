@@ -33,24 +33,27 @@ GLM max │ MCP月 ◔ 18% (744/4000) │ 重置剩余 16d 14h
 ```
 /plugin marketplace add BND-1/claude-hud-glm
 /plugin install claude-hud-glm@claude-hud-glm
+```
+**重启 Claude Code**(让插件及其命令加载),再运行:
+```
 /claude-hud-glm:setup
 ```
+`/claude-hud-glm:setup` 会写好 statusLine(已接好 GLM fetcher)、备份原 statusLine,并**全程用中文**与你交流、验证渲染。
 
-`/claude-hud-glm:setup` 会写好 statusLine(已接好 GLM fetcher)、备份原 statusLine、并验证渲染。
-
-**要显示 GLM 行**,在 `~/.claude/plugins/claude-hud-glm/config.json` 加:
-```jsonc
-{ "display": { "showGlmQuota": true } }
-```
+> GLM 额度行**默认开启**——智谱机器上装完即显示,无需手动改 config。想关掉或微调各项,用 `/claude-hud-glm:configure`。
 > 从早期版本升级?首次运行会自动把配置从 `~/.claude/plugins/claude-hud/` 迁移到 `claude-hud-glm/`。
 
 **GLM 额度的前提**:环境里要有 `ANTHROPIC_AUTH_TOKEN` + `ANTHROPIC_BASE_URL`(指向 `open.bigmodel.cn` 或 `api.z.ai`)。Claude Code 本身就靠这俩跑智谱/Z.ai,所以智谱机器上天然就有;若是 Anthropic 官方环境,HUD 照常工作,只是 GLM 行没数据(自动隐藏,不报错)。
 
 ## 进度样式
 
-`display.barStyle`:
-- `bar`(默认)—— `███░░░░░░░ 37%`
-- `ring` —— 紧凑 `◑ 37%`(单个 Unicode 环/饼字符,约 5 档)
+`display.barStyle` 两种(用 `/claude-hud-glm:configure` 切换):
+
+**进度条**(`bar`,默认):
+![进度条样式](claude-hud-glm-preview-bar.png)
+
+**环形图 / 饼图**(`ring`,紧凑):
+![环形图样式](claude-hud-glm-preview.png)
 
 ## 其它
 
